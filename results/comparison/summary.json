@@ -1,0 +1,106 @@
+{
+  "full": {
+    "accuracy": {
+      "mean": 0.7030555407206217,
+      "std": 0.011314106906914484
+    },
+    "top5": {
+      "mean": 0.9141666666666666,
+      "std": 0.00220479275922048
+    },
+    "macro_f1": {
+      "mean": 0.7002082069714864,
+      "std": 0.009170612614056849
+    }
+  },
+  "crop": {
+    "accuracy": {
+      "mean": 0.6744444568951925,
+      "std": 0.00048112476548791875
+    },
+    "top5": {
+      "mean": 0.896388888888889,
+      "std": 0.0009622504486493344
+    },
+    "macro_f1": {
+      "mean": 0.6706279913584391,
+      "std": 0.0022541886252490954
+    }
+  },
+  "paired": [
+    {
+      "seed": 42,
+      "full_top1": 0.7149999737739563,
+      "crop_top1": 0.6741666793823242,
+      "delta_percentage_points": -4.083329439163208,
+      "crop_fixes_full_errors": 98,
+      "crop_breaks_full_correct": 147
+    },
+    {
+      "seed": 43,
+      "full_top1": 0.7016666531562805,
+      "crop_top1": 0.675000011920929,
+      "delta_percentage_points": -2.6666641235351562,
+      "crop_fixes_full_errors": 115,
+      "crop_breaks_full_correct": 147
+    },
+    {
+      "seed": 44,
+      "full_top1": 0.6924999952316284,
+      "crop_top1": 0.6741666793823242,
+      "delta_percentage_points": -1.83333158493042,
+      "crop_fixes_full_errors": 138,
+      "crop_breaks_full_correct": 160
+    }
+  ],
+  "mean_paired_delta_percentage_points": -2.861108382542928,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "split_seed": 42,
+  "train_images": 4794,
+  "validation_images": 1200,
+  "official_test_evaluated": false,
+  "crop_margin_per_side": 0.1,
+  "bird_size_analysis": [
+    {
+      "bird_area_group": "<10%",
+      "images": 33,
+      "full_accuracy_mean": 0.616161616161616,
+      "full_accuracy_std": 0.0630807878626101,
+      "crop_accuracy_mean": 0.7575757575757575,
+      "crop_accuracy_std": 0.08017428215347247,
+      "delta_percentage_points": 14.141414141414144
+    },
+    {
+      "bird_area_group": "10-30%",
+      "images": 539,
+      "full_accuracy_mean": 0.7105751391465677,
+      "full_accuracy_std": 0.014007113980094172,
+      "crop_accuracy_mean": 0.6598639455782314,
+      "crop_accuracy_std": 0.007024005375139481,
+      "delta_percentage_points": -5.071119356833631
+    },
+    {
+      "bird_area_group": "30-60%",
+      "images": 501,
+      "full_accuracy_mean": 0.7198935462408516,
+      "full_accuracy_std": 0.020775109775111128,
+      "crop_accuracy_mean": 0.6819693945442449,
+      "crop_accuracy_std": 0.007556764265868661,
+      "delta_percentage_points": -3.792415169660668
+    },
+    {
+      "bird_area_group": ">=60%",
+      "images": 127,
+      "full_accuracy_mean": 0.6272965879265092,
+      "full_accuracy_std": 0.03721114666340636,
+      "crop_accuracy_mean": 0.6850393700787402,
+      "crop_accuracy_std": 0.03432203892551712,
+      "delta_percentage_points": 5.774278215223094
+    }
+  ]
+}
