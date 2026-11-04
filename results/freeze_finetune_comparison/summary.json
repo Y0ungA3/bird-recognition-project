@@ -1,0 +1,136 @@
+{
+  "frozen_head": {
+    "accuracy": {
+      "mean": 0.6197222272555033,
+      "std": 0.00987185483207709
+    },
+    "top5": {
+      "mean": 0.8786111111111111,
+      "std": 0.007087417123429484
+    },
+    "macro_f1": {
+      "mean": 0.6136842568715414,
+      "std": 0.01198217867390232
+    },
+    "total_seconds": 480.24333333333334,
+    "trainable_parameters": 102600
+  },
+  "finetune_all": {
+    "accuracy": {
+      "mean": 0.7413888971010844,
+      "std": 0.004589637745714604
+    },
+    "top5": {
+      "mean": 0.9308333333333333,
+      "std": 0.00833333333333336
+    },
+    "macro_f1": {
+      "mean": 0.7393026550610861,
+      "std": 0.005931867602878137
+    },
+    "total_seconds": 439.9966666666667,
+    "trainable_parameters": 11279112
+  },
+  "warmup_finetune": {
+    "accuracy": {
+      "mean": 0.7400000095367432,
+      "std": 0.0036324123221422528
+    },
+    "top5": {
+      "mean": 0.9344444444444445,
+      "std": 0.0041943524640392915
+    },
+    "macro_f1": {
+      "mean": 0.7390809655189514,
+      "std": 0.0032604257804641997
+    },
+    "total_seconds": 444.21666666666664,
+    "trainable_parameters": 11279112
+  },
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "split_seed": 42,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "train_images": 4794,
+  "validation_images": 1200,
+  "official_test_evaluated": false,
+  "paired": [
+    {
+      "left_policy": "finetune_all",
+      "right_policy": "frozen_head",
+      "seed": 42,
+      "left_minus_right_accuracy_percentage_points": 11.416666666666666,
+      "fixed_errors": 202,
+      "new_errors": 65
+    },
+    {
+      "left_policy": "finetune_all",
+      "right_policy": "frozen_head",
+      "seed": 43,
+      "left_minus_right_accuracy_percentage_points": 13.833333333333334,
+      "fixed_errors": 223,
+      "new_errors": 57
+    },
+    {
+      "left_policy": "finetune_all",
+      "right_policy": "frozen_head",
+      "seed": 44,
+      "left_minus_right_accuracy_percentage_points": 11.25,
+      "fixed_errors": 191,
+      "new_errors": 56
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "finetune_all",
+      "seed": 42,
+      "left_minus_right_accuracy_percentage_points": 0.5,
+      "fixed_errors": 64,
+      "new_errors": 58
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "finetune_all",
+      "seed": 43,
+      "left_minus_right_accuracy_percentage_points": -0.8333333333333334,
+      "fixed_errors": 64,
+      "new_errors": 74
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "finetune_all",
+      "seed": 44,
+      "left_minus_right_accuracy_percentage_points": -0.08333333333333333,
+      "fixed_errors": 69,
+      "new_errors": 70
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "frozen_head",
+      "seed": 42,
+      "left_minus_right_accuracy_percentage_points": 11.916666666666666,
+      "fixed_errors": 189,
+      "new_errors": 46
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "frozen_head",
+      "seed": 43,
+      "left_minus_right_accuracy_percentage_points": 13.0,
+      "fixed_errors": 212,
+      "new_errors": 56
+    },
+    {
+      "left_policy": "warmup_finetune",
+      "right_policy": "frozen_head",
+      "seed": 44,
+      "left_minus_right_accuracy_percentage_points": 11.166666666666666,
+      "fixed_errors": 195,
+      "new_errors": 61
+    }
+  ],
+  "interpretation": "Fine-tuning the backbone is essential. Fine-tuning from epoch 1 and freezing for 2 epochs have nearly identical mean accuracy; the 0.14-point mean difference does not support a stable claim that warm-up is beneficial.",
+  "controlled_variables": "All runs use crop=True, margin=0.1, resize_mode=letterbox, batch_size=32, 10 epochs, the same split and the same seeds."
+}

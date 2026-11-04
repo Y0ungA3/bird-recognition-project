@@ -1,0 +1,10 @@
+﻿left_policy,right_policy,seed,left_minus_right_accuracy_percentage_points,fixed_errors,new_errors
+finetune_all,frozen_head,42,11.416666666666666,202,65
+finetune_all,frozen_head,43,13.833333333333334,223,57
+finetune_all,frozen_head,44,11.25,191,56
+warmup_finetune,finetune_all,42,0.5,64,58
+warmup_finetune,finetune_all,43,-0.8333333333333334,64,74
+warmup_finetune,finetune_all,44,-0.08333333333333333,69,70
+warmup_finetune,frozen_head,42,11.916666666666666,189,46
+warmup_finetune,frozen_head,43,13.0,212,56
+warmup_finetune,frozen_head,44,11.166666666666666,195,61

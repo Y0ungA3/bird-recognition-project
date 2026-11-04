@@ -109,3 +109,139 @@ letterbox_checks.json 保存了狭长输入两端保留检查和16项旧输入�
 三方案汇总文件为 experiment_report.txt、summary.json、validation_results.csv、validation_predictions.csv、paired_differences.csv、bird_size_analysis.csv、performance_comparison.png、bird_size_comparison.png、validation_curves.png、qualitative_examples.png。旧两组结果从此前已保存的验证记录读取；新三组重新加载最佳模型评估，检查划分和受控参数一致；不评估官方测试集。
 
 2026-11-04 完成：缩放填充三次验证Top-1为74.25%、75.08%、73.58%；均值74.31%±0.75%，Top-5 93.06%，Macro-F1 0.7397。相对整图平均提升4.00个百分点、中心裁剪提升6.86个百分点，三个种子均提升。小于10%边界框占图组（n=33）平均准确率为82.83%，需注意样本量。以上均为验证集结果，未评估官方测试集。完整记录见 runs/letterbox_comparison/experiment_report.txt。
+
+## 本机整图与鸟框 letterbox 控制实验
+
+本实验用于排除“仅取消随机裁剪和中心裁剪即可带来提升”的解释。两种条件使用完全相同的 letterbox 几何处理和增强，仅保留水平翻转；唯一输入差异是鸟框条件使用真实边界框并每侧扩展10%，整图条件直接使用完整原图。
+
+运行 Run_Full_Letterbox_Control.bat，或在项目目录运行：
+
+    powershell -ExecutionPolicy Bypass -File run_full_letterbox_control.ps1
+
+该实验在 NVIDIA GeForce RTX 3060 Laptop GPU 6GB、Python 3.9.20、PyTorch 2.5.1+cu124 上完成，训练 batch size 为32、workers为0。固定 split-seed=42，训练 seed=42、43、44；每项训练10轮，前2轮冻结主干。
+
+2026-11-04 本机配对结果（3个训练种子的均值±样本标准差）：
+
+- 整图 letterbox：Top-1 65.25% ± 0.44%，Top-5 88.28% ± 0.76%，Macro-F1 64.82% ± 0.55%。
+- 鸟框 letterbox：Top-1 74.00% ± 0.36%，Top-5 93.44% ± 0.42%，Macro-F1 73.91% ± 0.33%。
+- 鸟框相对整图的逐种子 Top-1 差值分别为 +9.33、+8.08、+8.83 个百分点，平均 +8.75 个百分点。
+
+鸟框占原图面积不足10%时（n=33），整图 letterbox 与鸟框 letterbox 的平均 Top-1 分别为40.40%和84.85%；10-30%组（n=539）分别为62.21%和73.96%。小目标组样本量很小，应作为探索性结果。鸟框条件依赖额外真实位置标注，同时改变目标尺度和背景范围，因此结果支持继续研究前景定位，但不能单独证明背景的因果作用。
+
+训练目录为 runs/full_letterbox_seed42、seed43、seed44 和 runs/crop_letterbox_3060_seed43、seed44（seed42 使用 runs/milestone_letterbox_3060）。可分享的分析结果同时保存在 runs/local_geometry_comparison 与 results/local_geometry_comparison，后者包含 summary.json、validation_results.csv、validation_predictions.csv、paired_differences.csv、bird_size_analysis.csv、performance_comparison.png 和 experiment_report.txt。该子实验完成时官方测试集尚未评估；最终测试见文末。
+
+## 冻结主干与全参数微调对照
+
+运行 Run_Freeze_FineTune_Comparison.bat，或在项目目录运行：
+
+    powershell -ExecutionPolicy Bypass -File run_freeze_finetune_experiment.ps1
+
+所有条件使用相同的鸟框 letterbox 输入、固定 split-seed=42、训练 seed=42、43、44、batch size 32 和 10 轮预算。比较三种训练策略：全程冻结主干、从第1轮起微调全部参数、前2轮冻结后微调全部参数。
+
+2026-11-04 验证结果（3个训练种子的均值±样本标准差）：
+
+- 全程冻结主干：Top-1 61.97% ± 0.99%，Top-5 87.86% ± 0.71%，Macro-F1 61.37% ± 1.20%。
+- 从第1轮微调：Top-1 74.14% ± 0.46%，Top-5 93.08% ± 0.83%，Macro-F1 73.93% ± 0.59%。
+- 冻结2轮后微调：Top-1 74.00% ± 0.36%，Top-5 93.44% ± 0.42%，Macro-F1 73.91% ± 0.33%。
+
+从第1轮微调相对全程冻结的逐种子 Top-1 差值为 +11.42、+13.83、+11.25 个百分点。两轮预热与从第1轮微调的平均差值仅 -0.14 个百分点，且种子方向不一致（+0.50、-0.83、-0.08），没有证据支持两轮预热能稳定提升准确率。结论是：微调主干必要；两轮预热可作为历史基线保留，但最终训练不必依赖它。
+
+结果保存在 runs/freeze_finetune_comparison 和 results/freeze_finetune_comparison，包含 summary.json、per_seed_results.csv、validation_predictions.csv、paired_differences.csv、performance_comparison.png、learning_curves.png 和 experiment_report.txt。该子实验完成时官方测试集尚未评估；最终测试见文末。
+
+## 鸟框扩展范围消融
+
+运行 Run_Margin_Ablation.bat，或在项目目录运行：
+
+    powershell -ExecutionPolicy Bypass -File run_margin_ablation.ps1
+
+固定 ResNet-18、真实鸟框、letterbox、从第1轮全参数微调、训练4794张、验证1200张、split-seed=42、训练 seed=42、43、44、batch size32和10轮。只改变鸟框每侧扩展比例：0%、5%、10%、20%。10%条件复用 runs/finetune_all_seed42、seed43、seed44；新增模型分别保存在 runs/margin000_seed*、runs/margin005_seed*、runs/margin020_seed*。
+
+2026-11-04 验证结果（3个训练种子的均值±样本标准差）：
+
+- margin 0%：Top-1 76.06% ± 1.54%，Top-5 93.58% ± 0.14%，Macro-F1 75.97% ± 1.44%。
+- margin 5%：Top-1 75.19% ± 0.54%，Top-5 93.14% ± 0.94%，Macro-F1 75.03% ± 0.59%。
+- margin 10%：Top-1 74.14% ± 0.46%，Top-5 93.08% ± 0.83%，Macro-F1 73.93% ± 0.59%。
+- margin 20%：Top-1 72.78% ± 0.63%，Top-5 92.08% ± 0.63%，Macro-F1 72.73% ± 0.54%。
+
+相对10%的逐种子Top-1差值：0%为+1.25、+3.17、+1.33个百分点；5%为+0.67、+0.92、+1.58个百分点；20%为-1.58、-1.17、-1.33个百分点。0%和5%三个种子都优于10%，20%三个种子都弱于10%。0%验证均值最高，但种子间波动较大；5%是更稳定的次优范围。
+
+验证集平均输入构成：0%、5%、10%、20%下，鸟框分别占网络输入约100.00%、83.35%、71.49%、56.49%；裁剪区域分别约占原图34.78%、41.47%、47.83%、59.26%。这说明扩展比例越大，背景与目标尺度变化越明显。
+
+结果保存在 runs/margin_ablation 和 results/margin_ablation，包含 summary.json、per_seed_results.csv、validation_predictions.csv、paired_differences.csv、area_summary.csv、bird_size_analysis.csv、performance_comparison.png、context_composition.png、bird_size_comparison.png、margin_inputs.png 和 experiment_report.txt。该子实验完成时官方测试集尚未评估；最终测试见文末。
+
+## 背景干预与错误分析
+
+运行 Run_Background_Analysis.bat，或在项目目录运行：
+
+    powershell -ExecutionPolicy Bypass -File run_background_analysis.ps1
+
+分析使用本机训练的三个鸟框 letterbox checkpoint，仅在固定验证集的1200张图片上评估。模型输入视野为真实鸟框每侧扩展10%；所有条件统一使用 letterbox。
+
+- baseline：原始鸟框输入。
+- background_blur：保留鸟体，将扩展框内、紧贴鸟框外部的背景做半径12像素高斯模糊。
+- background_occluded：保留鸟体，将扩展框内的背景替换为RGB(124,116,104)。
+- background_only：将紧贴鸟框内部的鸟体遮为RGB(124,116,104)，保留周围背景。
+
+2026-11-04 三训练种子验证结果（均值±样本标准差）：
+
+- baseline：Top-1 74.00% ± 0.36%，Top-5 93.44% ± 0.42%，Macro-F1 73.91% ± 0.33%。
+- background_blur：Top-1 73.19% ± 0.51%，Top-5 92.94% ± 0.39%，Macro-F1 73.02% ± 0.57%。
+- background_occluded：Top-1 72.83% ± 0.46%，Top-5 92.78% ± 0.10%，Macro-F1 72.64% ± 0.55%。
+- background_only：Top-1 1.61% ± 0.34%，Top-5 6.92% ± 0.74%，Macro-F1 0.70% ± 0.16%。
+
+背景模糊和三种子平均只下降0.81个百分点，背景遮挡下降1.17个百分点；遮住鸟体后准确率下降72.39个百分点。该结果支持正常预测主要依赖鸟体区域，但 background-only 是分布变化下的辅助诊断，不能单独证明全部普通输入中的因果依赖。按鸟框面积分组，背景模糊和遮挡的影响均较小，而遮住鸟体在所有大小组都会造成大幅下降。
+
+结果保存在 runs/background_analysis 与 results/background_analysis。除上述三项外，还包含 seed42 的 Grad-CAM、每个背景条件的 Top-20 预测变化、Top-10 混淆类别对、最小/最大鸟框以及 improve/regress 案例比较。该子实验完成时官方测试集尚未评估；最终测试见文末。
+
+## 最终冻结模型与官方测试集
+
+最终模型在打开测试集前冻结：
+
+- ResNet-18 ImageNet 预训练；
+- CUB 真实鸟框，不额外扩展（margin 0%）；
+- letterbox，最长边224、保持比例并居中填充；
+- 从第1轮开始全参数微调；
+- 训练 seed 43；验证集最佳 epoch 10；
+- 固定 split-seed 42。
+
+模型选择只使用验证集：margin 0% 三种子均值最高，seed 43 是 margin 0% 中验证 Top-1 最高的 checkpoint。
+
+冻结目录：runs/final_candidate_margin000_seed43。best.pt SHA-256 为 0BE3EB6E5FB540ED7B90A83BDF54177AF25A35BEBF96C1B77B40642F61FB6982。
+
+官方测试集唯一一次评估结果（5,794张）：
+
+- Top-1：77.87%
+- Top-5：94.15%
+- Macro-F1：77.85%
+- Cross entropy：0.8551
+
+同一 checkpoint 的验证集 Top-1 为77.83%，测试集比验证集高0.04个百分点。测试后没有重新选择 checkpoint、seed、margin 或超参数。
+
+测试结果保存在 runs/final_test_margin000_seed43 和 results/final_test_analysis；后者包含 test_metrics.json、test_confusion_matrix.csv、test_predictions.csv、per_class_accuracy.csv、summary.json、validation_vs_test.png、per_class_accuracy.png、top_confusion_pairs.png 和 final_test_report.txt。
+
+## 报告与答辩版图
+
+统一视觉风格的实验图保存在 results/report_visuals：
+
+- 00_research_overview.png：六面板研究总览；
+- 01_original_input_conditions.png；
+- 02_controlled_whole_vs_bird.png；
+- 03_training_strategy.png；
+- 04_margin_ablation.png；
+- 05_background_interventions.png；
+- 06_background_by_bird_size.png；
+- 07_top10_confusions.png。
+
+最终模型的 Grad-CAM、混淆类别和模型卡保存在 results/final_visuals：gradcam_examples.png、top10_confusion_pairs.png、FINAL_MODEL_CARD.txt。
+
+## Final Report 与提交包
+
+Final Report 6页初稿位于 final_report/main.pdf，LaTeX 源文件为 final_report/main.tex。报告包含最终测试集结果、背景干预、模型比较、Grad-CAM、混淆分析、限制和课程AI使用披露。
+
+可直接检查的提交包：
+
+- submission/FINAL_REPORT.pdf
+- submission/MILESTONE.pdf
+- submission/SUPPLEMENTARY_MATERIAL.zip
+
+补充材料 ZIP 约3.5MB，包含源码、报告源文件、主要结果表和统一风格图；不包含 CUB 数据、checkpoint、虚拟环境或下载缓存。

@@ -158,8 +158,6 @@ def main():
         args.resize_mode = saved['config'].get('resize_mode', 'legacy')
     elif (args.run/'config.json').exists():
         raise RuntimeError('Run directory already used. Choose another --run or use --resume.')
-    if args.resize_mode == 'letterbox' and not args.crop:
-        raise ValueError('Letterbox experiment requires --crop')
     splits = make_splits(args.data, args.split_seed)
     split_hash = hashlib.sha256(json.dumps(splits, sort_keys=True).encode()).hexdigest()
     if saved and saved['split_sha256'] != split_hash:

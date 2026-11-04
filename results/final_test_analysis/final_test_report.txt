@@ -1,0 +1,60 @@
+最终冻结模型的官方测试集评估
+
+模型：margin 0%，ResNet-18，从第1轮全参数微调，seed 43
+模型冻结位置：runs/final_candidate_margin000_seed43/
+测试图片：5,794
+评估次数：1
+测试后调参：无
+
+官方测试结果：
+  Top-1 accuracy：77.87%
+  Top-5 accuracy：94.15%
+  Macro-F1：77.85%
+  Cross entropy loss：0.8551
+
+固定验证集结果：
+  Top-1 accuracy：77.83%
+  Top-5 accuracy：93.42%
+  Macro-F1：77.63%
+
+测试集 Top-1 相对验证集：+0.04 个百分点。
+该差值只表示本数据划分上的观察结果，不构成统计显著性检验。
+
+200 类测试表现：
+  类级准确率中位数：83.33%
+  类级准确率范围：23.33%–100.00%
+  每类测试图片数量约24–37张
+  类别级尾部差异适合用于错误分析，不应过度解释
+
+最常见测试混淆：
+  Great Grey Shrike -> Loggerhead Shrike
+  Common Raven -> American Crow
+  Elegant Tern -> Caspian Tern
+  Common Tern -> Forster's Tern
+  Arctic Tern -> Common Tern
+  Yellow bellied Flycatcher -> Acadian Flycatcher
+  Forster's Tern -> Common Tern
+  Chuck will Widow -> Whip poor Will
+  American Crow -> Common Raven
+  Ruby throated Hummingbird -> Anna Hummingbird
+
+文件：
+  summary.json
+  per_class_accuracy.csv
+  top_confusion_pairs.csv
+  validation_vs_test.png
+  per_class_accuracy.png
+  top_confusion_pairs.png
+
+原始测试产物：
+  runs/final_test_margin000_seed43/test_metrics.json
+  runs/final_test_margin000_seed43/test_confusion_matrix.csv
+  runs/final_test_margin000_seed43/test_predictions.csv
+
+解释限制：
+1. 模型依赖CUB真实鸟框，不能等价为无定位监督的端到端识别。
+2. CUB与ImageNet可能存在重叠，需继续披露。
+3. softmax概率未校准。
+4. 最终选择基于验证集；测试仅用于冻结后报告。
+
+文件结束。

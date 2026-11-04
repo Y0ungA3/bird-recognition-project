@@ -1,0 +1,228 @@
+{
+  "0.0": {
+    "accuracy": {
+      "mean": 0.7605555454889933,
+      "std": 0.0153959924956134
+    },
+    "top5": {
+      "mean": 0.9358333333333334,
+      "std": 0.0014433756729740337
+    },
+    "macro_f1": {
+      "mean": 0.7597130735715231,
+      "std": 0.01438298484173146
+    }
+  },
+  "0.05": {
+    "accuracy": {
+      "mean": 0.7519444425900778,
+      "std": 0.005357578646717171
+    },
+    "top5": {
+      "mean": 0.9313888888888888,
+      "std": 0.009366508500048523
+    },
+    "macro_f1": {
+      "mean": 0.7503340442975363,
+      "std": 0.005856004622708604
+    }
+  },
+  "0.1": {
+    "accuracy": {
+      "mean": 0.7413888971010844,
+      "std": 0.004589637745714604
+    },
+    "top5": {
+      "mean": 0.9308333333333333,
+      "std": 0.00833333333333336
+    },
+    "macro_f1": {
+      "mean": 0.7393026550610861,
+      "std": 0.005931867602878137
+    }
+  },
+  "0.2": {
+    "accuracy": {
+      "mean": 0.7277777989705404,
+      "std": 0.006309892144412488
+    },
+    "top5": {
+      "mean": 0.9208333333333334,
+      "std": 0.006291528696058934
+    },
+    "macro_f1": {
+      "mean": 0.7272580663363138,
+      "std": 0.00543190432151818
+    }
+  },
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "split_seed": 42,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "train_images": 4794,
+  "validation_images": 1200,
+  "official_test_evaluated": false,
+  "best_margin_by_validation_top1": 0.0,
+  "paired": [
+    {
+      "margin": 0.0,
+      "margin_percent": 0,
+      "seed": 42,
+      "margin_minus_10pct_accuracy_percentage_points": 1.25,
+      "fixed_errors": 79,
+      "new_errors": 64
+    },
+    {
+      "margin": 0.0,
+      "margin_percent": 0,
+      "seed": 43,
+      "margin_minus_10pct_accuracy_percentage_points": 3.1666666666666665,
+      "fixed_errors": 91,
+      "new_errors": 53
+    },
+    {
+      "margin": 0.0,
+      "margin_percent": 0,
+      "seed": 44,
+      "margin_minus_10pct_accuracy_percentage_points": 1.3333333333333333,
+      "fixed_errors": 86,
+      "new_errors": 70
+    },
+    {
+      "margin": 0.05,
+      "margin_percent": 5,
+      "seed": 42,
+      "margin_minus_10pct_accuracy_percentage_points": 0.6666666666666666,
+      "fixed_errors": 64,
+      "new_errors": 56
+    },
+    {
+      "margin": 0.05,
+      "margin_percent": 5,
+      "seed": 43,
+      "margin_minus_10pct_accuracy_percentage_points": 0.9166666666666666,
+      "fixed_errors": 73,
+      "new_errors": 62
+    },
+    {
+      "margin": 0.05,
+      "margin_percent": 5,
+      "seed": 44,
+      "margin_minus_10pct_accuracy_percentage_points": 1.5833333333333333,
+      "fixed_errors": 62,
+      "new_errors": 43
+    },
+    {
+      "margin": 0.2,
+      "margin_percent": 20,
+      "seed": 42,
+      "margin_minus_10pct_accuracy_percentage_points": -1.5833333333333333,
+      "fixed_errors": 54,
+      "new_errors": 73
+    },
+    {
+      "margin": 0.2,
+      "margin_percent": 20,
+      "seed": 43,
+      "margin_minus_10pct_accuracy_percentage_points": -1.1666666666666667,
+      "fixed_errors": 58,
+      "new_errors": 72
+    },
+    {
+      "margin": 0.2,
+      "margin_percent": 20,
+      "seed": 44,
+      "margin_minus_10pct_accuracy_percentage_points": -1.3333333333333333,
+      "fixed_errors": 63,
+      "new_errors": 79
+    }
+  ],
+  "area_summary": [
+    {
+      "margin": 0.0,
+      "margin_percent": 0,
+      "crop_area_fraction_mean": 0.34775022850880494,
+      "crop_area_fraction_std": 0.18521723496315176,
+      "bird_area_within_crop_mean": 1.0,
+      "bird_area_within_crop_std": 0.0
+    },
+    {
+      "margin": 0.05,
+      "margin_percent": 5,
+      "crop_area_fraction_mean": 0.4146845915368696,
+      "crop_area_fraction_std": 0.21303276215782155,
+      "bird_area_within_crop_mean": 0.8335088036825343,
+      "bird_area_within_crop_std": 0.01854284387124325
+    },
+    {
+      "margin": 0.1,
+      "margin_percent": 10,
+      "crop_area_fraction_mean": 0.4783114602106315,
+      "crop_area_fraction_std": 0.23006218755605146,
+      "bird_area_within_crop_mean": 0.7149270156154701,
+      "bird_area_within_crop_std": 0.04103997086919576
+    },
+    {
+      "margin": 0.2,
+      "margin_percent": 20,
+      "crop_area_fraction_mean": 0.5925755166557132,
+      "crop_area_fraction_std": 0.24341410972473898,
+      "bird_area_within_crop_mean": 0.5649424027035239,
+      "bird_area_within_crop_std": 0.07956986350385074
+    }
+  ],
+  "bird_size_analysis": [
+    {
+      "bird_box_area_group": "<10%",
+      "images": 33,
+      "margin_0_mean": 0.8282828282828283,
+      "margin_0_std": 0.034990925405431896,
+      "margin_5_mean": 0.8282828282828283,
+      "margin_5_std": 0.04628864338339233,
+      "margin_10_mean": 0.8484848484848485,
+      "margin_10_std": 0.030303030303030276,
+      "margin_20_mean": 0.8686868686868686,
+      "margin_20_std": 0.017495462702715917
+    },
+    {
+      "bird_box_area_group": "10-30%",
+      "images": 539,
+      "margin_0_mean": 0.7742733457019172,
+      "margin_0_std": 0.00933807598672943,
+      "margin_5_mean": 0.756338899196042,
+      "margin_5_std": 0.011183142436626518,
+      "margin_10_mean": 0.7396413110698825,
+      "margin_10_std": 0.0028339985744934085,
+      "margin_20_mean": 0.7278911564625851,
+      "margin_20_std": 0.00702400537513948
+    },
+    {
+      "bird_box_area_group": "30-60%",
+      "images": 501,
+      "margin_0_mean": 0.7385229540918163,
+      "margin_0_std": 0.02700149552588564,
+      "margin_5_mean": 0.7391882900864936,
+      "margin_5_std": 0.009000498508628546,
+      "margin_10_mean": 0.7325349301397205,
+      "margin_10_std": 0.007196709132662674,
+      "margin_20_mean": 0.7112441783100465,
+      "margin_20_std": 0.007009749669230049
+    },
+    {
+      "bird_box_area_group": ">=60%",
+      "images": 127,
+      "margin_0_mean": 0.7716535433070866,
+      "margin_0_std": 0.034322038925517113,
+      "margin_5_mean": 0.7637795275590551,
+      "margin_5_std": 0.013638195335187986,
+      "margin_10_mean": 0.7559055118110236,
+      "margin_10_std": 0.020832687488697526,
+      "margin_20_mean": 0.7559055118110236,
+      "margin_20_std": 0.020832687488697526
+    }
+  ],
+  "controlled_variables": "ResNet-18 ImageNet; crop=True; letterbox; fine-tune from epoch 1; batch size 32; 10 epochs; same split and seeds."
+}

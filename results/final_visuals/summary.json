@@ -1,0 +1,132 @@
+{
+  "selected_run": "runs\\margin000_seed43",
+  "selection_basis": "Best mean validation Top-1 margin; seed 43 best checkpoint",
+  "seed": 43,
+  "margin": 0.0,
+  "checkpoint_epoch": 10,
+  "validation": {
+    "accuracy": 0.7783333333333333,
+    "top5": 0.9341666666666667,
+    "macro_f1": 0.7763210923063864
+  },
+  "top10_confusion_pairs": [
+    {
+      "true_class_0based": 36,
+      "predicted_class_0based": 42,
+      "true_class": "037.Acadian_Flycatcher",
+      "predicted_class": "043.Yellow_bellied_Flycatcher",
+      "count": 2
+    },
+    {
+      "true_class_0based": 35,
+      "predicted_class_0based": 188,
+      "true_class": "036.Northern_Flicker",
+      "predicted_class": "189.Red_bellied_Woodpecker",
+      "count": 2
+    },
+    {
+      "true_class_0based": 32,
+      "predicted_class_0based": 31,
+      "true_class": "033.Yellow_billed_Cuckoo",
+      "predicted_class": "032.Mangrove_Cuckoo",
+      "count": 2
+    },
+    {
+      "true_class_0based": 24,
+      "predicted_class_0based": 22,
+      "true_class": "025.Pelagic_Cormorant",
+      "predicted_class": "023.Brandt_Cormorant",
+      "count": 2
+    },
+    {
+      "true_class_0based": 0,
+      "predicted_class_0based": 2,
+      "true_class": "001.Black_footed_Albatross",
+      "predicted_class": "003.Sooty_Albatross",
+      "count": 2
+    },
+    {
+      "true_class_0based": 183,
+      "predicted_class_0based": 182,
+      "true_class": "184.Louisiana_Waterthrush",
+      "predicted_class": "183.Northern_Waterthrush",
+      "count": 3
+    },
+    {
+      "true_class_0based": 140,
+      "predicted_class_0based": 143,
+      "true_class": "141.Artic_Tern",
+      "predicted_class": "144.Common_Tern",
+      "count": 3
+    },
+    {
+      "true_class_0based": 122,
+      "predicted_class_0based": 123,
+      "true_class": "123.Henslow_Sparrow",
+      "predicted_class": "124.Le_Conte_Sparrow",
+      "count": 3
+    },
+    {
+      "true_class_0based": 111,
+      "predicted_class_0based": 110,
+      "true_class": "112.Great_Grey_Shrike",
+      "predicted_class": "111.Loggerhead_Shrike",
+      "count": 3
+    },
+    {
+      "true_class_0based": 29,
+      "predicted_class_0based": 28,
+      "true_class": "030.Fish_Crow",
+      "predicted_class": "029.American_Crow",
+      "count": 3
+    }
+  ],
+  "selected_cases": [
+    {
+      "role": "Smallest bird box",
+      "image_id": 7935,
+      "path": "136.Barn_Swallow/Barn_Swallow_0056_132916.jpg",
+      "true_class": "136.Barn_Swallow",
+      "predicted_class": "136.Barn_Swallow",
+      "correct": 1,
+      "predicted_probability": 0.9818382263183594
+    },
+    {
+      "role": "Representative correct",
+      "image_id": 10710,
+      "path": "182.Yellow_Warbler/Yellow_Warbler_0087_176591.jpg",
+      "true_class": "182.Yellow_Warbler",
+      "predicted_class": "182.Yellow_Warbler",
+      "correct": 1,
+      "predicted_probability": 0.9921820163726807
+    },
+    {
+      "role": "Largest bird box",
+      "image_id": 272,
+      "path": "005.Crested_Auklet/Crested_Auklet_0071_785255.jpg",
+      "true_class": "005.Crested_Auklet",
+      "predicted_class": "058.Pigeon_Guillemot",
+      "correct": 0,
+      "predicted_probability": 0.5655949711799622
+    },
+    {
+      "role": "High-confidence error",
+      "image_id": 7652,
+      "path": "131.Vesper_Sparrow/Vesper_Sparrow_0013_109937.jpg",
+      "true_class": "131.Vesper_Sparrow",
+      "predicted_class": "076.Dark_eyed_Junco",
+      "correct": 0,
+      "predicted_probability": 0.9988119602203369
+    },
+    {
+      "role": "Second high-confidence error",
+      "image_id": 10128,
+      "path": "173.Orange_crowned_Warbler/Orange_Crowned_Warbler_0083_167948.jpg",
+      "true_class": "173.Orange_crowned_Warbler",
+      "predicted_class": "172.Nashville_Warbler",
+      "correct": 0,
+      "predicted_probability": 0.9875396490097046
+    }
+  ],
+  "official_test_evaluated": false
+}

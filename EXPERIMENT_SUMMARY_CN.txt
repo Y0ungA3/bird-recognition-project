@@ -1,0 +1,775 @@
+CUB-200-2011 鸟类细粒度识别项目
+当前实验总结、完成度与剩余任务
+更新日期：2026-11-04
+
+======================================================================
+一、结论摘要
+======================================================================
+
+1. 最终冻结方法：
+
+   ResNet-18 ImageNet 预训练
+   + CUB 真实鸟框，暂不额外扩展（margin 0%）
+   + 最长边缩放到 224，保持比例并居中填充（letterbox）
+   + 训练时保留水平翻转
+   + 10 轮训练，从第 1 轮开始微调全部参数
+
+2. 当前主训练方案的验证集结果：
+
+   鸟框 letterbox + 从第1轮微调：Top-1 74.14% ± 0.46%
+   鸟框 letterbox + 两轮预热后微调：Top-1 74.00% ± 0.36%
+
+   两种微调策略的均值相近，预热没有稳定优势；微调主干是决定性的。
+
+   裁剪范围消融的最佳候选：
+   鸟框 margin 0%：Top-1 76.06% ± 1.54%
+   鸟框 margin 5%：Top-1 75.19% ± 0.54%
+
+   同机整图/鸟框控制（两者均两轮预热，margin 10%）：
+   整图 letterbox：Top-1 65.25% ± 0.44%
+   鸟框 letterbox：Top-1 74.00% ± 0.36%
+   同机配对提升：+8.75 个百分点
+
+   三个训练种子的提升方向完全一致，分别为：
+   seed 42：+9.33 个百分点
+   seed 43：+8.08 个百分点
+   seed 44：+8.83 个百分点
+
+3. 背景实验表明：
+
+   背景模糊只使 Top-1 下降 0.81 个百分点；
+   背景遮挡只使 Top-1 下降 1.17 个百分点；
+   遮住鸟体、只保留背景后，Top-1 降到 1.61%。
+
+   因此，当前证据支持“正常预测主要依赖鸟体外观”，
+   但不能写成“背景对所有输入完全无用”或“已经证明严格因果作用”。
+
+4. 最终冻结模型的官方测试集结果（5,794张）：
+
+   Top-1：77.87%
+   Top-5：94.15%
+   Macro-F1：77.85%
+
+   同一checkpoint验证集Top-1：77.83%
+   测试集相对验证集：+0.04个百分点
+   测试后没有重新选择或调整模型。
+
+5. 当前状态：
+
+   Milestone 文件已经完成，约 95%；
+   最终课程项目整体约 90%（主观估计）；
+   官方测试集已经完成唯一一次评估；
+   Final Report 6页初稿和补充材料包已完成，待最终核验提交。
+
+6. 最终提交前必须完成的内容：
+
+   - Final Report 的最终人工核验与定稿；
+   - Git commit、push 和合作者审阅。
+
+======================================================================
+二、与最初 README / ChatGPT 计划的逐项对照
+======================================================================
+
+说明：
+- 最初 README 主要承诺基础训练、整图/裁剪对照、letterbox 和预测脚本。
+- ChatGPT 最初计划还建议冻结/微调对照、裁剪范围消融、背景分析、
+  Grad-CAM、错误案例、三训练种子、测试集和最终报告。
+- “完成度”是依据当前产物给出的主观进度，不是课程评分。
+
+任务                                 状态       完成度   证据/说明
+----------------------------------------------------------------------
+题目与研究问题确定                    完成       95%     前景/背景对鸟类细粒度识别的作用
+CUB 数据下载、MD5 与逐图验证          完成      100%     11,788 张图片全部有效
+固定训练/验证/测试划分                完成      100%     训练 4,794；验证 1,200；测试 5,794
+RTX 3060 本地训练环境                 完成      100%     Python 3.9.20；PyTorch 2.5.1/CUDA 12.4
+GPU 前向/反向验证与冒烟训练           完成      100%     ResNet-18 实际计算通过
+ResNet-18 基础训练                    完成      100%     3 个训练种子
+整图 vs 鸟框中心裁剪                  完成      100%     3 个训练种子
+鸟框 letterbox 实验                  完成      100%     3 个训练种子
+整图 vs 鸟框 letterbox 控制实验        完成      100%     同机、同几何、同增强，3 个种子
+背景模糊/遮挡/background-only         完成      100%     固定验证集，3 个种子
+Grad-CAM 可视化                       完成      100%     最终模型五类案例与背景分析案例
+Top-10 混淆类别对                     完成      100%     seed 42 验证集
+鸟框面积大小分组                     完成      100%     四组；<10% 组仅 33 张
+改善/退化案例比较                     完成      100%     seed 42
+Top 预测变化案例                      完成      100%     每种背景条件各 Top-20
+Milestone 报告                        基本完成    95%     3 页 CVPR 格式 PDF，待合作者确认/提交
+冻结主干 vs 微调对照                  完成      100%     3种策略 × seed 42/43/44；微调主干是关键
+裁剪范围/背景扩展消融                 完成      100%     0%/5%/10%/20% × 3种子；0%验证最高
+双分支整图+鸟框融合                   未做        0%     原计划列为可选扩展
+最终方法选择与冻结                    完成      100%     margin0 + seed43，测试前已冻结
+官方测试集评估                        完成      100%     Top-1 77.87%；Top-5 94.15%
+Final Report                          基本完成    90%     6页CVPR格式初稿，含测试与限制
+最终引用、补充材料、AI 使用说明       完成      100%     结果ZIP约3.5MB，不含数据/权重
+上传图片/框选/热力图交互 Demo         部分       30%     有 CLI 预测与静态 Grad-CAM，无网页交互
+Git 提交、推送、合作者同步            未完成      0%     当前修改仍只在本地实验分支
+
+总体判断：
+  研究实验和数据基础：约 90–95%
+  测试集与最终模型定型：约 100%
+  报告与正式交付：约 60%
+  综合最终课程项目：约 90%
+
+======================================================================
+三、已经完成的实验
+======================================================================
+
+实验 A：基础整图模型
+----------------------------------------------------------------------
+
+目的：
+建立 200 类鸟类识别的初步基准。
+
+设置：
+- CUB-200-2011 全部 200 类；
+- 官方训练集按类别分层划分；
+- 4,794 张训练、1,200 张验证、5,794 张官方测试保留；
+- ResNet-18 ImageNet 预训练；
+- 10 轮；前 2 轮冻结主干；
+- batch size 32；
+- AdamW；混合精度。
+
+结果：
+- 原始 seed 42 单独基准：Top-1 71.50%；
+- 三训练种子整图均值：
+  Top-1 70.31% ± 1.13%
+  Top-5 91.42% ± 0.22%
+  Macro-F1 70.02% ± 0.92%
+
+说明：
+这是迁移学习基础结果，不代表最终方法。
+
+实验 B：整图 vs 鸟框中心裁剪
+----------------------------------------------------------------------
+
+目的：
+检验把输入聚焦到鸟区域能否改善识别。
+
+条件：
+- 使用真实鸟框；
+- 每侧扩展框宽/高的 10%；
+- 鸟框裁剪后继续使用 Resize(256) + CenterCrop(224)；
+- 三个训练种子，固定同一数据划分。
+
+结果：
+整图：
+  Top-1 70.31% ± 1.13%
+  Top-5 91.42% ± 0.22%
+  Macro-F1 70.02% ± 0.92%
+
+中心裁剪：
+  Top-1 67.44% ± 0.05%
+  Top-5 89.64% ± 0.10%
+  Macro-F1 67.06% ± 0.23%
+
+结论：
+- 鸟框中心裁剪平均比整图低 2.86 个百分点；
+- 三个种子方向一致；
+- 案例显示中心裁剪可能截断狭长鸟的头、尾或翅膀；
+- 因此不能直接把性能下降归因于背景。
+
+探索性分组：
+- 鸟框面积 <10% 的 33 张图片中，中心裁剪平均提高 14.14 个百分点；
+- 样本量很小，不能作为稳定结论。
+
+实验 C：鸟框 letterbox
+----------------------------------------------------------------------
+
+目的：
+完整保留扩展鸟框，避免中心裁剪截断鸟体。
+
+条件：
+- 使用同一个 10% 扩展鸟框；
+- 最长边等比例缩放到 224；
+- 居中填充为 224×224；
+- 填充颜色 RGB(124,116,104)；
+- 训练仅保留水平翻转；
+- 取消随机缩放裁剪和验证中心裁剪。
+
+结果：
+鸟框 letterbox：
+  Top-1 74.31% ± 0.75%
+  Top-5 93.06% ± 0.42%
+  Macro-F1 73.97% ± 0.88%
+
+相对整图：+4.00 个百分点；
+相对中心裁剪：+6.86 个百分点；
+三个种子均提升。
+
+重要限制：
+这一组同时改变了鸟框内容、缩放方式、padding 和增强策略，
+不能把提升单独归因于 padding。
+
+实验 D：整图 vs 鸟框 letterbox 控制实验
+----------------------------------------------------------------------
+
+目的：
+排除“只要取消随机裁剪/中心裁剪就会提升”的替代解释。
+
+控制条件：
+- 两种条件都使用 letterbox；
+- 两种条件都只保留水平翻转；
+- 两种条件使用相同网络、训练轮数、batch size、数据划分和随机种子；
+- 唯一主要输入差异是：是否使用真实鸟框。
+
+本机环境：
+- NVIDIA GeForce RTX 3060 Laptop GPU，6 GB；
+- Python 3.9.20；
+- PyTorch 2.5.1+cu124；
+- batch size 32；workers=0。
+
+结果（3 个训练种子的均值 ± 样本标准差）：
+
+整图 letterbox：
+  Top-1 65.25% ± 0.44%
+  Top-5 88.28% ± 0.76%
+  Macro-F1 64.82% ± 0.55%
+
+鸟框 letterbox：
+  Top-1 74.00% ± 0.36%
+  Top-5 93.44% ± 0.42%
+  Macro-F1 73.91% ± 0.33%
+
+配对提升：
+  seed 42：+9.33 个百分点
+  seed 43：+8.08 个百分点
+  seed 44：+8.83 个百分点
+  平均：+8.75 个百分点
+
+结论：
+- 鸟框定位及目标尺度分配是当前管线中的主要增益来源；
+- 提升不能被解释为单纯取消随机裁剪；
+- 鸟框同时改变尺度与背景范围，因此仍不能把增益全部归因于“背景”。
+
+实验 E：背景模糊与背景遮挡
+----------------------------------------------------------------------
+
+目的：
+在保持鸟体清晰的前提下，改变鸟框周围背景，检验背景依赖程度。
+
+条件：
+- 使用三个本机鸟框 letterbox 模型；
+- 固定验证集全部 1,200 张；
+- 模型输入视野为 10% 扩展鸟框；
+- 所有条件统一 letterbox。
+
+background_blur：
+  紧贴鸟框外部的背景使用半径 12 原图像素的高斯模糊；
+  鸟体保持清晰。
+
+background_occluded：
+  紧贴鸟框外部的背景替换为 RGB(124,116,104)；
+  鸟体保持清晰。
+
+结果：
+Baseline：
+  Top-1 74.00% ± 0.36%
+  Top-5 93.44% ± 0.42%
+  Macro-F1 73.91% ± 0.33%
+
+Background blur：
+  Top-1 73.19% ± 0.51%
+  Top-5 92.94% ± 0.39%
+  Macro-F1 73.02% ± 0.57%
+
+Background occluded：
+  Top-1 72.83% ± 0.46%
+  Top-5 92.78% ± 0.10%
+  Macro-F1 72.64% ± 0.55%
+
+配对变化：
+- 每个种子的背景模糊均下降；
+- 每个种子的背景遮挡均下降；
+- 模糊平均下降 0.81 个百分点；
+- 遮挡平均下降 1.17 个百分点；
+- 影响方向稳定，但幅度较小。
+
+实验 F：Background-only 诊断
+----------------------------------------------------------------------
+
+目的：
+遮住鸟体，只保留周围背景，观察模型能否仅靠背景识别。
+
+条件：
+- 紧贴鸟框内部的鸟体被替换为 RGB(124,116,104)；
+- 保留鸟框周围背景；
+- 仍使用同样的 letterbox 和模型。
+
+结果：
+Top-1 1.61% ± 0.34%
+Top-5 6.92% ± 0.74%
+Macro-F1 0.70% ± 0.16%
+
+三种子相对 baseline：
+几乎全部鸟类图片都无法正确识别。
+
+解释：
+- 这是很强烈的背景-only 失败信号；
+- 支持正常输入主要依赖鸟体；
+- 但这是分布外人为输入，不能单独证明严格因果机制；
+- 应和背景模糊、遮挡、Grad-CAM 和错误分析共同解释。
+
+实验 G：按鸟框面积分组
+----------------------------------------------------------------------
+
+鸟框面积 = 边界框面积 / 原图面积。
+
+Baseline / Blur / Occluded / Bird-masked Top-1：
+
+<10% (n=33)：
+  84.85% / 84.85% / 82.83% / 2.02%
+
+10–30% (n=539)：
+  73.96% / 73.59% / 72.48% / 1.73%
+
+30–60% (n=501)：
+  73.25% / 71.99% / 72.19% / 1.80%
+
+>=60% (n=127)：
+  74.28% / 73.23% / 74.28% / 0.26%
+
+解释：
+- 背景干预在不同鸟体大小下影响均较小；
+- 无论鸟体大小，遮住鸟体都会使性能崩溃；
+- <10% 组只有 33 张，应视为探索性结果。
+
+实验 H：Grad-CAM 与错误分析
+----------------------------------------------------------------------
+
+已生成 seed 42 的 Grad-CAM，案例包括：
+- 最小鸟框；
+- 最大鸟框；
+- 整图错误但鸟框 letterbox 正确的改善案例；
+- 整图正确但鸟框 letterbox 错误的退化案例。
+
+观察：
+- 正确预测通常将热点集中到头、喙、身体轮廓或花纹；
+- 退化案例的热点较分散；
+- 热图只是相关区域可视化，不是因果证明。
+
+Top-10 混淆类别对示例：
+- Pelagic Cormorant -> Brandt Cormorant
+- Fish Crow -> Common Raven
+- Western Gull -> California Gull
+- Whip-poor-will -> Chuck-will's-widow
+- Great Grey Shrike -> Loggerhead Shrike
+- Least Tern -> Forster's Tern
+- Philadelphia Vireo -> Warbling Vireo
+
+注意：
+- 每类验证集只有约 6 张图片；
+- 多数混淆对的计数仅 2–3 张；
+- 这些错误适合用于解释，不适合做稳定的类别级统计推断。
+
+已生成 Top 预测变化：
+- 背景模糊、背景遮挡、background-only 各 Top-20；
+- 记录预测类别是否改变、真实类别概率下降量；
+- 输出案例图展示每个条件的前两个变化案例。
+
+实验 I：冻结主干 vs 全参数微调
+----------------------------------------------------------------------
+
+目的：
+在相同鸟框 letterbox 输入上，区分“只利用固定 ImageNet 特征”
+与“让主干适应鸟类数据”的差异，并检验两轮冻结预热是否必要。
+
+固定条件：
+- CUB-200-2011；
+- 训练4,794张、验证1,200张；
+- split-seed=42；
+- 训练 seed=42、43、44；
+- ResNet-18 ImageNet 预训练；
+- 真实鸟框每侧扩展10%；
+- letterbox；
+- batch size32、10轮；
+- 主干学习率1e-4、分类头1e-3；
+- weight decay 1e-4、混合精度。
+
+三种策略：
+- frozen_head：10轮全程冻结主干，只更新分类头；
+- finetune_all：第1轮起同时更新主干和分类头；
+- warmup_finetune：前2轮冻结主干，之后8轮微调全部参数。
+
+结果（3个训练种子的均值±样本标准差）：
+
+全程冻结主干：
+  Top-1 61.97% ± 0.99%
+  Top-5 87.86% ± 0.71%
+  Macro-F1 61.37% ± 1.20%
+
+从第1轮微调：
+  Top-1 74.14% ± 0.46%
+  Top-5 93.08% ± 0.83%
+  Macro-F1 73.93% ± 0.59%
+
+冻结2轮后微调：
+  Top-1 74.00% ± 0.36%
+  Top-5 93.44% ± 0.42%
+  Macro-F1 73.91% ± 0.33%
+
+配对比较：
+- 从第1轮微调相对全程冻结：
+  seed 42 +11.42、seed 43 +13.83、seed 44 +11.25个百分点；
+- 两轮预热相对从第1轮微调：
+  seed 42 +0.50、seed 43 -0.83、seed 44 -0.08个百分点；
+- 两轮预热相对从第1轮微调的平均差为 -0.14个百分点。
+
+结论：
+- 微调 ImageNet 主干是本实验最大的训练收益来源；
+- 全程冻结只更新102,600个分类头参数，明显欠拟合鸟类细粒度任务；
+- 从第1轮微调和两轮预热后的均值几乎相同；
+- 预热方向在种子上不一致，不能声称有稳定优势；
+- 最终主方法候选更新为“鸟框 letterbox + 从第1轮全参数微调”。
+
+结果文件：
+  runs/freeze_finetune_comparison/
+  results/freeze_finetune_comparison/
+
+实验 J：鸟框扩展范围消融
+----------------------------------------------------------------------
+
+目的：
+在固定网络和训练预算下，比较鸟框每侧扩展0%、5%、10%、20%时，
+保留的鸟体/背景比例及其对识别性能的影响。
+
+固定条件：
+- ResNet-18 ImageNet预训练；
+- 真实鸟框；
+- letterbox；
+- 从第1轮开始全参数微调；
+- 训练4,794张、验证1,200张；
+- split-seed=42；训练seed=42、43、44；
+- batch size32、10轮；
+- 主干学习率1e-4、分类头1e-3；
+- weight decay 1e-4、混合精度。
+
+结果（3个训练种子的均值±样本标准差）：
+
+margin 0%：
+  Top-1 76.06% ± 1.54%
+  Top-5 93.58% ± 0.14%
+  Macro-F1 75.97% ± 1.44%
+
+margin 5%：
+  Top-1 75.19% ± 0.54%
+  Top-5 93.14% ± 0.94%
+  Macro-F1 75.03% ± 0.59%
+
+margin 10%：
+  Top-1 74.14% ± 0.46%
+  Top-5 93.08% ± 0.83%
+  Macro-F1 73.93% ± 0.59%
+
+margin 20%：
+  Top-1 72.78% ± 0.63%
+  Top-5 92.08% ± 0.63%
+  Macro-F1 72.73% ± 0.54%
+
+相对10%的逐种子Top-1差值：
+- margin 0%：+1.25、+3.17、+1.33个百分点；
+- margin 5%：+0.67、+0.92、+1.58个百分点；
+- margin 20%：-1.58、-1.17、-1.33个百分点。
+
+结论：
+- 0%验证均值最高，三个种子都优于10%；
+- 5%为次优，三个种子也都优于10%，种子间波动更小；
+- 20%在三个种子上都低于10%，更多背景没有带来收益；
+- 0%相对5%为2胜1负，平均高约0.86个百分点，优势证据弱于两者相对10%的差异；
+- 不同margin同时改变目标尺度和背景面积，不能只归因于背景；
+- 0%依赖边界框较紧，但CUB边界框不保证包含全部头尾，这是限制。
+
+验证集平均输入构成：
+- 0%：裁剪区域约占原图34.78%，鸟框约占网络输入100.00%；
+- 5%：裁剪区域约占原图41.47%，鸟框约占83.35%；
+- 10%：裁剪区域约占原图47.83%，鸟框约占71.49%；
+- 20%：裁剪区域约占原图59.26%，鸟框约占56.49%。
+
+最终方法候选更新为：
+  鸟框 margin 0% + letterbox + 从第1轮全参数微调；
+  5%作为更稳定的次优配置保留。
+
+结果文件：
+  runs/margin_ablation/
+  results/margin_ablation/
+
+实验 K：最终模型冻结与官方测试集
+----------------------------------------------------------------------
+
+最终选择：
+  margin 0%；
+  ResNet-18；
+  letterbox；
+  从第1轮全参数微调；
+  seed 43；
+  验证集最佳 epoch 10。
+
+选择依据：
+- margin 0% 在三个种子上均值最高；
+- seed 43 是 margin 0% 中验证 Top-1 最高的 checkpoint；
+- 模型在打开官方测试集之前复制并冻结到
+  runs/final_candidate_margin000_seed43。
+
+冻结模型 best.pt SHA-256：
+  0BE3EB6E5FB540ED7B90A83BDF54177AF25A35BEBF96C1B77B40642F61FB6982
+
+官方测试集评估：
+  图片数 5,794
+  Top-1 77.87%
+  Top-5 94.15%
+  Macro-F1 77.85%
+  Cross entropy 0.8551
+
+验证集结果：
+  Top-1 77.83%
+  Top-5 93.42%
+  Macro-F1 77.63%
+
+测试集Top-1相对验证集：+0.04个百分点。
+
+200类测试表现：
+  类级准确率中位数83.33%；
+  类级准确率范围23.33%–100.00%。
+
+最常见测试混淆：
+  Great Grey Shrike -> Loggerhead Shrike（17）
+  Common Raven -> American Crow（12）
+  Elegant Tern -> Caspian Tern（12）
+  Common Tern -> Forster's Tern（10）
+  Arctic Tern -> Common Tern（9）
+
+评估规则：
+- 该测试结果不用于选择checkpoint、seed、margin或超参数；
+- 测试完成后没有重新训练或调参。
+
+结果文件：
+  runs/final_candidate_margin000_seed43/
+  runs/final_test_margin000_seed43/
+  results/final_visuals/
+  results/final_test_analysis/
+
+======================================================================
+四、目前尚未完成的关键任务
+======================================================================
+
+1. 双分支整图 + 鸟框融合
+----------------------------------------------------------------------
+
+原计划标记为可选，目前未做。
+在没有完成最终测试集和 Final Report 前，不建议临时加入。
+
+2. Final Report 最终定稿
+----------------------------------------------------------------------
+
+6页初稿已经完成并编译通过。
+仍需作者人工核验：
+- 作者信息与课程要求；
+- 所有表格和测试数字；
+- 引用格式和课程AI使用政策；
+- 最终PDF提交格式。
+
+3. 补充材料与复现包
+----------------------------------------------------------------------
+
+已完成：
+- submission/FINAL_REPORT.pdf；
+- submission/MILESTONE.pdf；
+- submission/SUPPLEMENTARY_MATERIAL.zip，约3.5MB；
+- 包含源码、报告源文件、结果和图；
+- 不包含 data、checkpoint、虚拟环境和缓存。
+
+4. 交互 Demo（可选但加分）
+----------------------------------------------------------------------
+
+当前：
+- predict.py 支持命令行图片预测；
+- 但主模型依赖鸟框，现有 predict.py 不能直接运行鸟框 letterbox 模型；
+- 已有静态 Grad-CAM 和结果可视化。
+
+若做最终展示，建议：
+上传图片 -> 手动框选鸟体 -> 使用选定的扩展比例 -> letterbox
+-> 输出 Top-5 -> 显示 Grad-CAM。
+
+需要明确：
+自动鸟检测不是当前研究实验的一部分；
+若加入自动检测，会改变“使用真实边界框”的实验条件。
+
+5. Git 与团队同步
+----------------------------------------------------------------------
+
+当前分支：
+experiment/whole-image-letterbox-control
+
+当前状态：
+- README、实验脚本、Milestone、结果文件仍在本地；
+- 尚未 commit；
+- 尚未 push；
+- 合作者从 GitHub 还看不到这些新结果。
+
+需要：
+1. 两人审阅结果与 Milestone；
+2. 检查差异；
+3. commit；
+4. push；
+5. 在 GitHub 上创建 Pull Request 或合并到协作分支。
+
+======================================================================
+五、完成度评估
+======================================================================
+
+这是主观工程进度，不是课程评分的精确百分比。
+
+研究问题与计划              90%
+数据与环境                  100%
+基础训练与核心输入对照      95%
+背景与可解释性分析          90%
+最终训练机制对照            100%
+裁剪范围消融                100%
+最终模型冻结与测试集        100%
+Milestone                   95%
+Final Report                90%
+补充材料与团队交付          80%
+
+整体最终项目约：90%
+Milestone 单独约：95%
+
+理由：
+- 数据、环境、核心方法和分析证据已经较完整；
+- 官方测试集和最终模型已经完成；
+- 最终报告初稿已完成，仍需人工核验；
+- commit/push尚未完成。
+
+======================================================================
+六、建议的后续顺序
+======================================================================
+
+第一步（最优先，11 月 6 日前）
+1. 合作者审阅 Milestone；
+2. 确认 README 与结果数字一致；
+3. commit 并 push 当前实验分支；
+4. 提交 Milestone。
+
+第二步（研究收口）
+已完成：最终模型已冻结，Grad-CAM、混淆类别、案例和背景分析已完成。
+
+第三步（最终评估）
+已完成：官方测试集Top-1 77.87%，Top-5 94.15%，Macro-F1 77.85%；
+测试后未调参。
+
+第四步（最终交付）
+1. 人工核对Final Report与课程要求；
+2. 合作者复核数字、结论和AI披露；
+3. commit并push实验分支；
+4. 可选完成手工框选Grad-CAM Demo；
+5. 团队最终提交。
+
+======================================================================
+七、主要结果文件索引
+======================================================================
+
+Milestone：
+  milestone/main.pdf
+  milestone/main.tex
+
+Final Report：
+  final_report/main.pdf
+  final_report/main.tex
+
+提交包：
+  submission/FINAL_REPORT.pdf
+  submission/MILESTONE.pdf
+  submission/SUPPLEMENTARY_MATERIAL.zip
+
+背景与错误分析：
+  results/background_analysis/background_report.txt
+  results/background_analysis/summary.json
+  results/background_analysis/validation_predictions.csv
+  results/background_analysis/top_prediction_changes.csv
+  results/background_analysis/top10_confusion_pairs.csv
+  results/background_analysis/background_performance.png
+  results/background_analysis/background_by_bird_size.png
+  results/background_analysis/gradcam_examples.png
+  results/background_analysis/case_comparison.png
+  results/background_analysis/background_shift_examples.png
+
+整图 vs 鸟框 letterbox 控制实验：
+  results/local_geometry_comparison/summary.json
+  results/local_geometry_comparison/validation_results.csv
+  results/local_geometry_comparison/paired_differences.csv
+  results/local_geometry_comparison/performance_comparison.png
+  results/local_geometry_comparison/experiment_report.txt
+
+冻结主干 vs 全参数微调：
+  results/freeze_finetune_comparison/summary.json
+  results/freeze_finetune_comparison/per_seed_results.csv
+  results/freeze_finetune_comparison/validation_predictions.csv
+  results/freeze_finetune_comparison/paired_differences.csv
+  results/freeze_finetune_comparison/performance_comparison.png
+  results/freeze_finetune_comparison/learning_curves.png
+  results/freeze_finetune_comparison/experiment_report.txt
+
+鸟框扩展范围消融：
+  results/margin_ablation/summary.json
+  results/margin_ablation/per_seed_results.csv
+  results/margin_ablation/validation_predictions.csv
+  results/margin_ablation/paired_differences.csv
+  results/margin_ablation/area_summary.csv
+  results/margin_ablation/bird_size_analysis.csv
+  results/margin_ablation/performance_comparison.png
+  results/margin_ablation/context_composition.png
+  results/margin_ablation/bird_size_comparison.png
+  results/margin_ablation/margin_inputs.png
+
+最终模型与测试集：
+  results/final_visuals/FINAL_MODEL_CARD.txt
+  results/final_visuals/summary.json
+  results/final_visuals/gradcam_examples.png
+  results/final_visuals/top10_confusion_pairs.png
+  results/final_test_analysis/final_test_report.txt
+  results/final_test_analysis/summary.json
+  results/final_test_analysis/test_metrics.json
+  results/final_test_analysis/test_confusion_matrix.csv
+  results/final_test_analysis/test_predictions.csv
+  results/final_test_analysis/per_class_accuracy.csv
+  results/final_test_analysis/validation_vs_test.png
+  results/final_test_analysis/per_class_accuracy.png
+  results/final_test_analysis/top_confusion_pairs.png
+
+报告与答辩版图：
+  results/report_visuals/00_research_overview.png
+  results/report_visuals/01_original_input_conditions.png
+  results/report_visuals/02_controlled_whole_vs_bird.png
+  results/report_visuals/03_training_strategy.png
+  results/report_visuals/04_margin_ablation.png
+  results/report_visuals/05_background_interventions.png
+  results/report_visuals/06_background_by_bird_size.png
+  results/report_visuals/07_top10_confusions.png
+
+原始三方案比较：
+  results/comparison/
+  results/letterbox_comparison/
+
+复现入口：
+  Run_Comparison.bat
+  Run_Letterbox.bat
+  Run_Full_Letterbox_Control.bat
+  Run_Freeze_FineTune_Comparison.bat
+  Run_Margin_Ablation.bat
+  Run_Background_Analysis.bat
+
+======================================================================
+八、报告和答辩时必须保留的限制
+======================================================================
+
+1. 除最终冻结模型外，研究实验数字均来自验证集；最终测试结果单独标明。
+2. 鸟框来自 CUB 真实标注，不是自动检测结果；
+   因此主方法依赖额外位置标注。
+3. 鸟框会同时改变目标尺度和背景范围，不能单独证明背景的因果作用。
+4. 三种子标准差是样本标准差，不是置信区间。
+5. CUB 与 ImageNet 可能存在重叠，迁移学习结果需说明该限制。
+6. Grad-CAM 是辅助可视化，不是严格因果解释。
+7. 每类验证集只有约 6 张，类别级和 Top-10 混淆结果应谨慎解释。
+8. 当前只测试 ResNet-18，不能宣称优于所有其他细粒度识别方法。
+9. 课程补充材料不应包含数据集和模型 checkpoint。
+10. 最终测试集已评估一次，测试结果未用于回头调参。
+
+文件结束。

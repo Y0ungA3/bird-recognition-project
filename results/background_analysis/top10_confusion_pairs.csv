@@ -1,0 +1,11 @@
+﻿true_class_0based,predicted_class_0based,true_class,predicted_class,count
+24,22,025.Pelagic_Cormorant,023.Brandt_Cormorant,3
+29,106,030.Fish_Crow,107.Common_Raven,3
+65,58,066.Western_Gull,059.California_Gull,3
+104,21,105.Whip_poor_Will,022.Chuck_will_Widow,3
+111,110,112.Great_Grey_Shrike,111.Loggerhead_Shrike,3
+146,145,147.Least_Tern,146.Forsters_Tern,3
+152,154,153.Philadelphia_Vireo,155.Warbling_Vireo,3
+21,104,022.Chuck_will_Widow,105.Whip_poor_Will,2
+22,24,023.Brandt_Cormorant,025.Pelagic_Cormorant,2
+23,24,024.Red_faced_Cormorant,025.Pelagic_Cormorant,2

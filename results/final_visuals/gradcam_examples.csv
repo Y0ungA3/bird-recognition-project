@@ -1,0 +1,6 @@
+﻿role,image_id,path,true_class,predicted_class,correct,predicted_probability
+Smallest bird box,7935,136.Barn_Swallow/Barn_Swallow_0056_132916.jpg,136.Barn_Swallow,136.Barn_Swallow,1,0.9818382263183594
+Representative correct,10710,182.Yellow_Warbler/Yellow_Warbler_0087_176591.jpg,182.Yellow_Warbler,182.Yellow_Warbler,1,0.9921820163726807
+Largest bird box,272,005.Crested_Auklet/Crested_Auklet_0071_785255.jpg,005.Crested_Auklet,058.Pigeon_Guillemot,0,0.5655949711799622
+High-confidence error,7652,131.Vesper_Sparrow/Vesper_Sparrow_0013_109937.jpg,131.Vesper_Sparrow,076.Dark_eyed_Junco,0,0.9988119602203369
+Second high-confidence error,10128,173.Orange_crowned_Warbler/Orange_Crowned_Warbler_0083_167948.jpg,173.Orange_crowned_Warbler,172.Nashville_Warbler,0,0.9875396490097046

@@ -1,0 +1,101 @@
+{
+  "model": "margin000_seed43",
+  "selection_basis": "Validation only, before official test",
+  "official_test_images": 5794,
+  "validation": {
+    "loss": 0.8837945699691773,
+    "accuracy": 0.778333306312561,
+    "macro_f1": 0.7763211131095886,
+    "top5": 0.9341666666666667
+  },
+  "official_test": {
+    "loss": 0.8550931128461401,
+    "accuracy": 0.7787366509437561,
+    "macro_f1": 0.7785329222679138,
+    "top5": 0.9414911977908181,
+    "checkpoint_epoch": 10,
+    "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+    "smoke": false
+  },
+  "absolute_validation_test_top1_delta_percentage_points": 0.040334463119506836,
+  "per_class_accuracy": {
+    "mean": 0.7805654081102475,
+    "median": 0.8333333333333334,
+    "min": 0.23333333333333334,
+    "max": 1.0
+  },
+  "top10_confusion_pairs": [
+    {
+      "true_class_0based": 111,
+      "predicted_class_0based": 110,
+      "true_class": "112.Great_Grey_Shrike",
+      "predicted_class": "111.Loggerhead_Shrike",
+      "count": 17
+    },
+    {
+      "true_class_0based": 106,
+      "predicted_class_0based": 28,
+      "true_class": "107.Common_Raven",
+      "predicted_class": "029.American_Crow",
+      "count": 12
+    },
+    {
+      "true_class_0based": 144,
+      "predicted_class_0based": 142,
+      "true_class": "145.Elegant_Tern",
+      "predicted_class": "143.Caspian_Tern",
+      "count": 12
+    },
+    {
+      "true_class_0based": 143,
+      "predicted_class_0based": 145,
+      "true_class": "144.Common_Tern",
+      "predicted_class": "146.Forsters_Tern",
+      "count": 10
+    },
+    {
+      "true_class_0based": 140,
+      "predicted_class_0based": 143,
+      "true_class": "141.Artic_Tern",
+      "predicted_class": "144.Common_Tern",
+      "count": 9
+    },
+    {
+      "true_class_0based": 42,
+      "predicted_class_0based": 36,
+      "true_class": "043.Yellow_bellied_Flycatcher",
+      "predicted_class": "037.Acadian_Flycatcher",
+      "count": 8
+    },
+    {
+      "true_class_0based": 145,
+      "predicted_class_0based": 143,
+      "true_class": "146.Forsters_Tern",
+      "predicted_class": "144.Common_Tern",
+      "count": 8
+    },
+    {
+      "true_class_0based": 21,
+      "predicted_class_0based": 104,
+      "true_class": "022.Chuck_will_Widow",
+      "predicted_class": "105.Whip_poor_Will",
+      "count": 7
+    },
+    {
+      "true_class_0based": 28,
+      "predicted_class_0based": 106,
+      "true_class": "029.American_Crow",
+      "predicted_class": "107.Common_Raven",
+      "count": 7
+    },
+    {
+      "true_class_0based": 67,
+      "predicted_class_0based": 66,
+      "true_class": "068.Ruby_throated_Hummingbird",
+      "predicted_class": "067.Anna_Hummingbird",
+      "count": 7
+    }
+  ],
+  "post_test_tuning": false,
+  "official_test_evaluated": true
+}

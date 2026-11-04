@@ -1,0 +1,13 @@
+﻿整图与鸟框 letterbox 的本地控制实验
+
+设置：RTX 3060 Laptop GPU 6GB；固定 split-seed=42；训练 seed=42、43、44；ResNet-18；训练4794张、验证1200张；10轮，前2轮冻结主干；batch32；两种条件都使用最长边224等比例缩放、居中填充和水平翻转，验证不再中心裁剪。
+唯一输入差异：鸟框条件使用真实边界框并每侧扩展10%；整图条件直接使用完整原图。
+
+结果（3个训练种子的均值±样本标准差，不是置信区间）：
+整图 letterbox：Top-1 65.25% ± 0.44%；Top-5 88.28% ± 0.76%；Macro-F1 64.82% ± 0.55%
+鸟框 letterbox：Top-1 74.00% ± 0.36%；Top-5 93.44% ± 0.42%；Macro-F1 73.91% ± 0.33%
+鸟框相对整图 letterbox 的平均 Top-1 差值：+8.75个百分点。
+
+限制：鸟框条件依赖额外真实位置标注；它同时改变目标尺度和背景内容。该实验只能说明在当前预处理管线中定位鸟框是否有帮助，不能单独证明背景的因果作用。官方测试集未评估。
+
+文件：summary.json、validation_results.csv、validation_predictions.csv、paired_differences.csv、bird_size_analysis.csv、performance_comparison.png。

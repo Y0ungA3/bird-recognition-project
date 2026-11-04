@@ -1,0 +1,696 @@
+{
+  "baseline": {
+    "accuracy": {
+      "mean": 0.7399999999999999,
+      "std": 0.003632415786283877
+    },
+    "top5": {
+      "mean": 0.9344444444444445,
+      "std": 0.0041943524640392915
+    },
+    "macro_f1": {
+      "mean": 0.7390809549927196,
+      "std": 0.003260354718737548
+    }
+  },
+  "background_blur": {
+    "accuracy": {
+      "mean": 0.7319444444444444,
+      "std": 0.005091750772173165
+    },
+    "top5": {
+      "mean": 0.9294444444444445,
+      "std": 0.003938179688543806
+    },
+    "macro_f1": {
+      "mean": 0.7301738507537742,
+      "std": 0.005662976023006074
+    }
+  },
+  "background_occluded": {
+    "accuracy": {
+      "mean": 0.7283333333333334,
+      "std": 0.0046398036356916725
+    },
+    "top5": {
+      "mean": 0.9277777777777777,
+      "std": 0.0009622504486493984
+    },
+    "macro_f1": {
+      "mean": 0.7263862971182261,
+      "std": 0.005508284192226396
+    }
+  },
+  "background_only": {
+    "accuracy": {
+      "mean": 0.016111111111111107,
+      "std": 0.0033678765702728156
+    },
+    "top5": {
+      "mean": 0.06916666666666667,
+      "std": 0.0074068286810963216
+    },
+    "macro_f1": {
+      "mean": 0.007026501325950832,
+      "std": 0.0016172812605976577
+    }
+  },
+  "conditions": {
+    "baseline": "Unmodified bird-region letterbox",
+    "background_blur": "Bird clear; context Gaussian blurred",
+    "background_occluded": "Bird clear; context filled",
+    "background_only": "Bird masked; context retained"
+  },
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "split_seed": 42,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "train_images": 4794,
+  "validation_images": 1200,
+  "official_test_evaluated": false,
+  "margin": 0.1,
+  "blur_radius_original_pixels": 12,
+  "occlusion_fill_rgb": [
+    124,
+    116,
+    104
+  ],
+  "paired": [
+    {
+      "seed": 42,
+      "condition": "background_blur",
+      "accuracy_delta_percentage_points": -0.6666666666666666,
+      "fixed_errors": 27,
+      "new_errors": 35,
+      "mean_true_probability_delta": -0.010683472444601041
+    },
+    {
+      "seed": 42,
+      "condition": "background_occluded",
+      "accuracy_delta_percentage_points": -1.1666666666666667,
+      "fixed_errors": 31,
+      "new_errors": 45,
+      "mean_true_probability_delta": -0.019211369703701468
+    },
+    {
+      "seed": 42,
+      "condition": "background_only",
+      "accuracy_delta_percentage_points": -72.5,
+      "fixed_errors": 4,
+      "new_errors": 874,
+      "mean_true_probability_delta": -0.6294227857701363
+    },
+    {
+      "seed": 43,
+      "condition": "background_blur",
+      "accuracy_delta_percentage_points": -1.0833333333333333,
+      "fixed_errors": 20,
+      "new_errors": 33,
+      "mean_true_probability_delta": -0.009283644140690512
+    },
+    {
+      "seed": 43,
+      "condition": "background_occluded",
+      "accuracy_delta_percentage_points": -0.9166666666666666,
+      "fixed_errors": 33,
+      "new_errors": 44,
+      "mean_true_probability_delta": -0.014811391754507592
+    },
+    {
+      "seed": 43,
+      "condition": "background_only",
+      "accuracy_delta_percentage_points": -72.16666666666667,
+      "fixed_errors": 2,
+      "new_errors": 868,
+      "mean_true_probability_delta": -0.6155508581669157
+    },
+    {
+      "seed": 44,
+      "condition": "background_blur",
+      "accuracy_delta_percentage_points": -0.6666666666666666,
+      "fixed_errors": 24,
+      "new_errors": 32,
+      "mean_true_probability_delta": -0.006939633338288473
+    },
+    {
+      "seed": 44,
+      "condition": "background_occluded",
+      "accuracy_delta_percentage_points": -1.4166666666666667,
+      "fixed_errors": 34,
+      "new_errors": 51,
+      "mean_true_probability_delta": -0.014187523138286574
+    },
+    {
+      "seed": 44,
+      "condition": "background_only",
+      "accuracy_delta_percentage_points": -72.5,
+      "fixed_errors": 4,
+      "new_errors": 874,
+      "mean_true_probability_delta": -0.6217033312479306
+    }
+  ],
+  "bird_size_analysis": [
+    {
+      "bird_box_area_group": "<10%",
+      "images": 33,
+      "baseline_mean": 0.8484848484848485,
+      "baseline_std": 0.030303030303030276,
+      "baseline_delta_vs_baseline": 0.0,
+      "background_blur_mean": 0.8484848484848485,
+      "background_blur_std": 0.030303030303030276,
+      "background_blur_delta_vs_baseline": 0.0,
+      "background_occluded_mean": 0.8282828282828283,
+      "background_occluded_std": 0.04628864338339233,
+      "background_occluded_delta_vs_baseline": -0.02020202020202022,
+      "background_only_mean": 0.020202020202020204,
+      "background_only_std": 0.017495462702715934,
+      "background_only_delta_vs_baseline": -0.8282828282828283
+    },
+    {
+      "bird_box_area_group": "10-30%",
+      "images": 539,
+      "baseline_mean": 0.7396413110698825,
+      "baseline_std": 0.010870993092917097,
+      "baseline_delta_vs_baseline": 0.0,
+      "background_blur_mean": 0.735930735930736,
+      "background_blur_std": 0.01316252112170239,
+      "background_blur_delta_vs_baseline": -0.0037105751391465214,
+      "background_occluded_mean": 0.7247990105132963,
+      "background_occluded_std": 0.014410859861139175,
+      "background_occluded_delta_vs_baseline": -0.014842300556586197,
+      "background_only_mean": 0.017316017316017316,
+      "background_only_std": 0.004284603110869208,
+      "background_only_delta_vs_baseline": -0.7223252937538652
+    },
+    {
+      "bird_box_area_group": "30-60%",
+      "images": 501,
+      "baseline_mean": 0.7325349301397206,
+      "baseline_std": 0.005280940740647857,
+      "baseline_delta_vs_baseline": 0.0,
+      "background_blur_mean": 0.7198935462408516,
+      "background_blur_std": 0.008066770228198407,
+      "background_blur_delta_vs_baseline": -0.01264138389886904,
+      "background_occluded_mean": 0.7218895542248837,
+      "background_occluded_std": 0.009846073577477545,
+      "background_occluded_delta_vs_baseline": -0.010645375914836941,
+      "background_only_mean": 0.017964071856287425,
+      "background_only_std": 0.006914374481312884,
+      "background_only_delta_vs_baseline": -0.7145708582834331
+    },
+    {
+      "bird_box_area_group": ">=60%",
+      "images": 127,
+      "baseline_mean": 0.7427821522309711,
+      "baseline_std": 0.016391070861938025,
+      "baseline_delta_vs_baseline": 0.0,
+      "background_blur_mean": 0.7322834645669292,
+      "background_blur_std": 0.01574803149606302,
+      "background_blur_delta_vs_baseline": -0.010498687664041939,
+      "background_occluded_mean": 0.7427821522309711,
+      "background_occluded_std": 0.016391070861938025,
+      "background_occluded_delta_vs_baseline": 0.0,
+      "background_only_mean": 0.0026246719160104987,
+      "background_only_std": 0.004546065111729336,
+      "background_only_delta_vs_baseline": -0.7401574803149606
+    }
+  ],
+  "top10_confusion_pairs": [
+    {
+      "true_class_0based": 24,
+      "predicted_class_0based": 22,
+      "true_class": "025.Pelagic_Cormorant",
+      "predicted_class": "023.Brandt_Cormorant",
+      "count": 3
+    },
+    {
+      "true_class_0based": 29,
+      "predicted_class_0based": 106,
+      "true_class": "030.Fish_Crow",
+      "predicted_class": "107.Common_Raven",
+      "count": 3
+    },
+    {
+      "true_class_0based": 65,
+      "predicted_class_0based": 58,
+      "true_class": "066.Western_Gull",
+      "predicted_class": "059.California_Gull",
+      "count": 3
+    },
+    {
+      "true_class_0based": 104,
+      "predicted_class_0based": 21,
+      "true_class": "105.Whip_poor_Will",
+      "predicted_class": "022.Chuck_will_Widow",
+      "count": 3
+    },
+    {
+      "true_class_0based": 111,
+      "predicted_class_0based": 110,
+      "true_class": "112.Great_Grey_Shrike",
+      "predicted_class": "111.Loggerhead_Shrike",
+      "count": 3
+    },
+    {
+      "true_class_0based": 146,
+      "predicted_class_0based": 145,
+      "true_class": "147.Least_Tern",
+      "predicted_class": "146.Forsters_Tern",
+      "count": 3
+    },
+    {
+      "true_class_0based": 152,
+      "predicted_class_0based": 154,
+      "true_class": "153.Philadelphia_Vireo",
+      "predicted_class": "155.Warbling_Vireo",
+      "count": 3
+    },
+    {
+      "true_class_0based": 21,
+      "predicted_class_0based": 104,
+      "true_class": "022.Chuck_will_Widow",
+      "predicted_class": "105.Whip_poor_Will",
+      "count": 2
+    },
+    {
+      "true_class_0based": 22,
+      "predicted_class_0based": 24,
+      "true_class": "023.Brandt_Cormorant",
+      "predicted_class": "025.Pelagic_Cormorant",
+      "count": 2
+    },
+    {
+      "true_class_0based": 23,
+      "predicted_class_0based": 24,
+      "true_class": "024.Red_faced_Cormorant",
+      "predicted_class": "025.Pelagic_Cormorant",
+      "count": 2
+    }
+  ],
+  "examples": {
+    "case_rows": [
+      {
+        "role": "Smallest bird",
+        "image_id": 7935,
+        "path": "136.Barn_Swallow/Barn_Swallow_0056_132916.jpg",
+        "true_class": "136.Barn_Swallow",
+        "bird_box_area": 0.05005427974947808
+      },
+      {
+        "role": "Largest bird",
+        "image_id": 272,
+        "path": "005.Crested_Auklet/Crested_Auklet_0071_785255.jpg",
+        "true_class": "005.Crested_Auklet",
+        "bird_box_area": 1.0
+      },
+      {
+        "role": "Letterbox improvement",
+        "image_id": 166,
+        "path": "003.Sooty_Albatross/Sooty_Albatross_0014_796373.jpg",
+        "true_class": "003.Sooty_Albatross",
+        "bird_box_area": 0.550849840255591
+      },
+      {
+        "role": "Letterbox regression",
+        "image_id": 89,
+        "path": "002.Laysan_Albatross/Laysan_Albatross_0088_883.jpg",
+        "true_class": "002.Laysan_Albatross",
+        "bird_box_area": 0.5239221556886228
+      }
+    ],
+    "largest_prediction_changes": {
+      "background_blur": [
+        {
+          "seed": 42,
+          "condition": "background_blur",
+          "image_id": 1772,
+          "true_class_0based": 31,
+          "baseline_predicted_class_0based": 31,
+          "changed_predicted_class_0based": 31,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.48700493574142456,
+          "baseline_true_probability": 0.870489776134491,
+          "changed_true_probability": 0.3834848403930664
+        },
+        {
+          "seed": 42,
+          "condition": "background_blur",
+          "image_id": 7471,
+          "true_class_0based": 127,
+          "baseline_predicted_class_0based": 127,
+          "changed_predicted_class_0based": 122,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.46849633753299713,
+          "baseline_true_probability": 0.6250144839286804,
+          "changed_true_probability": 0.1565181463956833
+        },
+        {
+          "seed": 42,
+          "condition": "background_blur",
+          "image_id": 1831,
+          "true_class_0based": 32,
+          "baseline_predicted_class_0based": 32,
+          "changed_predicted_class_0based": 32,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.4500107765197754,
+          "baseline_true_probability": 0.8787047266960144,
+          "changed_true_probability": 0.428693950176239
+        },
+        {
+          "seed": 43,
+          "condition": "background_blur",
+          "image_id": 1831,
+          "true_class_0based": 32,
+          "baseline_predicted_class_0based": 32,
+          "changed_predicted_class_0based": 32,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.4435915946960449,
+          "baseline_true_probability": 0.9436290264129639,
+          "changed_true_probability": 0.500037431716919
+        },
+        {
+          "seed": 44,
+          "condition": "background_blur",
+          "image_id": 7471,
+          "true_class_0based": 127,
+          "baseline_predicted_class_0based": 127,
+          "changed_predicted_class_0based": 42,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.44280559569597244,
+          "baseline_true_probability": 0.5553395748138428,
+          "changed_true_probability": 0.11253397911787033
+        },
+        {
+          "seed": 44,
+          "condition": "background_blur",
+          "image_id": 1824,
+          "true_class_0based": 32,
+          "baseline_predicted_class_0based": 32,
+          "changed_predicted_class_0based": 30,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.435287743806839,
+          "baseline_true_probability": 0.6994268298149109,
+          "changed_true_probability": 0.2641390860080719
+        },
+        {
+          "seed": 42,
+          "condition": "background_blur",
+          "image_id": 181,
+          "true_class_0based": 3,
+          "baseline_predicted_class_0based": 3,
+          "changed_predicted_class_0based": 29,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.4331207126379013,
+          "baseline_true_probability": 0.49338212609291077,
+          "changed_true_probability": 0.06026141345500946
+        },
+        {
+          "seed": 43,
+          "condition": "background_blur",
+          "image_id": 11555,
+          "true_class_0based": 196,
+          "baseline_predicted_class_0based": 196,
+          "changed_predicted_class_0based": 196,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.4176792800426483,
+          "baseline_true_probability": 0.6656415462493896,
+          "changed_true_probability": 0.24796226620674133
+        },
+        {
+          "seed": 44,
+          "condition": "background_blur",
+          "image_id": 2175,
+          "true_class_0based": 38,
+          "baseline_predicted_class_0based": 38,
+          "changed_predicted_class_0based": 101,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.40942688286304474,
+          "baseline_true_probability": 0.5852744579315186,
+          "changed_true_probability": 0.17584757506847382
+        },
+        {
+          "seed": 42,
+          "condition": "background_blur",
+          "image_id": 3043,
+          "true_class_0based": 52,
+          "baseline_predicted_class_0based": 52,
+          "changed_predicted_class_0based": 72,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.40911225974559784,
+          "baseline_true_probability": 0.5766897797584534,
+          "changed_true_probability": 0.16757752001285553
+        }
+      ],
+      "background_occluded": [
+        {
+          "seed": 43,
+          "condition": "background_occluded",
+          "image_id": 5235,
+          "true_class_0based": 89,
+          "baseline_predicted_class_0based": 89,
+          "changed_predicted_class_0based": 49,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.6751650422811508,
+          "baseline_true_probability": 0.8743123412132263,
+          "changed_true_probability": 0.1991472989320755
+        },
+        {
+          "seed": 43,
+          "condition": "background_occluded",
+          "image_id": 2343,
+          "true_class_0based": 40,
+          "baseline_predicted_class_0based": 40,
+          "changed_predicted_class_0based": 136,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.5525958836078644,
+          "baseline_true_probability": 0.7506850957870483,
+          "changed_true_probability": 0.19808921217918396
+        },
+        {
+          "seed": 42,
+          "condition": "background_occluded",
+          "image_id": 7471,
+          "true_class_0based": 127,
+          "baseline_predicted_class_0based": 127,
+          "changed_predicted_class_0based": 152,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.5348379909992218,
+          "baseline_true_probability": 0.6250144839286804,
+          "changed_true_probability": 0.09017649292945862
+        },
+        {
+          "seed": 44,
+          "condition": "background_occluded",
+          "image_id": 2881,
+          "true_class_0based": 49,
+          "baseline_predicted_class_0based": 49,
+          "changed_predicted_class_0based": 49,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.5221275389194489,
+          "baseline_true_probability": 0.807946503162384,
+          "changed_true_probability": 0.2858189642429352
+        },
+        {
+          "seed": 42,
+          "condition": "background_occluded",
+          "image_id": 203,
+          "true_class_0based": 3,
+          "baseline_predicted_class_0based": 3,
+          "changed_predicted_class_0based": 3,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.5202924907207489,
+          "baseline_true_probability": 0.8409021496772766,
+          "changed_true_probability": 0.3206096589565277
+        },
+        {
+          "seed": 44,
+          "condition": "background_occluded",
+          "image_id": 7471,
+          "true_class_0based": 127,
+          "baseline_predicted_class_0based": 127,
+          "changed_predicted_class_0based": 42,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.5021452978253365,
+          "baseline_true_probability": 0.5553395748138428,
+          "changed_true_probability": 0.05319427698850632
+        },
+        {
+          "seed": 44,
+          "condition": "background_occluded",
+          "image_id": 7886,
+          "true_class_0based": 134,
+          "baseline_predicted_class_0based": 134,
+          "changed_predicted_class_0based": 134,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.4996868371963501,
+          "baseline_true_probability": 0.9518830180168152,
+          "changed_true_probability": 0.4521961808204651
+        },
+        {
+          "seed": 42,
+          "condition": "background_occluded",
+          "image_id": 2757,
+          "true_class_0based": 47,
+          "baseline_predicted_class_0based": 47,
+          "changed_predicted_class_0based": 47,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.49761253595352173,
+          "baseline_true_probability": 0.9502946138381958,
+          "changed_true_probability": 0.4526820778846741
+        },
+        {
+          "seed": 44,
+          "condition": "background_occluded",
+          "image_id": 2343,
+          "true_class_0based": 40,
+          "baseline_predicted_class_0based": 40,
+          "changed_predicted_class_0based": 157,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.4963374584913254,
+          "baseline_true_probability": 0.6687242388725281,
+          "changed_true_probability": 0.1723867803812027
+        },
+        {
+          "seed": 42,
+          "condition": "background_occluded",
+          "image_id": 6792,
+          "true_class_0based": 116,
+          "baseline_predicted_class_0based": 116,
+          "changed_predicted_class_0based": 116,
+          "prediction_changed": 0,
+          "true_probability_drop": 0.49079960584640503,
+          "baseline_true_probability": 0.8554519414901733,
+          "changed_true_probability": 0.3646523356437683
+        }
+      ],
+      "background_only": [
+        {
+          "seed": 42,
+          "condition": "background_only",
+          "image_id": 3139,
+          "true_class_0based": 54,
+          "baseline_predicted_class_0based": 54,
+          "changed_predicted_class_0based": 27,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9991814155946486,
+          "baseline_true_probability": 0.9994807839393616,
+          "changed_true_probability": 0.00029936834471300244
+        },
+        {
+          "seed": 42,
+          "condition": "background_only",
+          "image_id": 4794,
+          "true_class_0based": 82,
+          "baseline_predicted_class_0based": 82,
+          "changed_predicted_class_0based": 27,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9991353626828641,
+          "baseline_true_probability": 0.9996986389160156,
+          "changed_true_probability": 0.0005632762331515551
+        },
+        {
+          "seed": 44,
+          "condition": "background_only",
+          "image_id": 2641,
+          "true_class_0based": 45,
+          "baseline_predicted_class_0based": 45,
+          "changed_predicted_class_0based": 140,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9990403463016264,
+          "baseline_true_probability": 0.9997861981391907,
+          "changed_true_probability": 0.0007458518375642598
+        },
+        {
+          "seed": 43,
+          "condition": "background_only",
+          "image_id": 3139,
+          "true_class_0based": 54,
+          "baseline_predicted_class_0based": 54,
+          "changed_predicted_class_0based": 27,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9989541246904992,
+          "baseline_true_probability": 0.9993947744369507,
+          "changed_true_probability": 0.0004406497464515269
+        },
+        {
+          "seed": 43,
+          "condition": "background_only",
+          "image_id": 2641,
+          "true_class_0based": 45,
+          "baseline_predicted_class_0based": 45,
+          "changed_predicted_class_0based": 40,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.998949998349417,
+          "baseline_true_probability": 0.9991245865821838,
+          "changed_true_probability": 0.00017458823276683688
+        },
+        {
+          "seed": 42,
+          "condition": "background_only",
+          "image_id": 4680,
+          "true_class_0based": 80,
+          "baseline_predicted_class_0based": 80,
+          "changed_predicted_class_0based": 166,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9989490414591273,
+          "baseline_true_probability": 0.9991832375526428,
+          "changed_true_probability": 0.00023419609351549298
+        },
+        {
+          "seed": 44,
+          "condition": "background_only",
+          "image_id": 3139,
+          "true_class_0based": 54,
+          "baseline_predicted_class_0based": 54,
+          "changed_predicted_class_0based": 17,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9988534042495303,
+          "baseline_true_probability": 0.9994264841079712,
+          "changed_true_probability": 0.0005730798584409058
+        },
+        {
+          "seed": 44,
+          "condition": "background_only",
+          "image_id": 4794,
+          "true_class_0based": 82,
+          "baseline_predicted_class_0based": 82,
+          "changed_predicted_class_0based": 36,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9987565163755789,
+          "baseline_true_probability": 0.9996976852416992,
+          "changed_true_probability": 0.0009411688661202788
+        },
+        {
+          "seed": 44,
+          "condition": "background_only",
+          "image_id": 5067,
+          "true_class_0based": 86,
+          "baseline_predicted_class_0based": 86,
+          "changed_predicted_class_0based": 114,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.998753716237843,
+          "baseline_true_probability": 0.9994648098945618,
+          "changed_true_probability": 0.0007110936567187309
+        },
+        {
+          "seed": 44,
+          "condition": "background_only",
+          "image_id": 5557,
+          "true_class_0based": 94,
+          "baseline_predicted_class_0based": 94,
+          "changed_predicted_class_0based": 17,
+          "prediction_changed": 1,
+          "true_probability_drop": 0.9983242287416942,
+          "baseline_true_probability": 0.9990283250808716,
+          "changed_true_probability": 0.0007040963391773403
+        }
+      ]
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "torch": "2.5.1+cu124",
+  "cuda": "12.4"
+}

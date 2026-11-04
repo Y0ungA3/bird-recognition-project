@@ -1,0 +1,9 @@
+{
+  "loss": 0.8550931128461401,
+  "accuracy": 0.7787366509437561,
+  "macro_f1": 0.7785329222679138,
+  "top5": 0.9414911977908181,
+  "checkpoint_epoch": 10,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "smoke": false
+}

@@ -1,0 +1,23 @@
+﻿背景干预与可视化分析（仅使用固定验证集）
+
+设置：使用本机 RTX 3060 训练的鸟框 letterbox 模型，训练 seed=42、43、44；固定 split-seed=42；每次选择验证 Top-1 最佳 checkpoint。官方测试集未评估。
+鸟体区域：真实边界框；模型输入视野：边界框每侧扩展10%。所有条件统一 letterbox。
+background_blur：扩展框内部、紧贴鸟框外部的背景使用高斯模糊，半径12原图像素；鸟体保持原样。
+background_occluded：扩展框内部、紧贴鸟框外部的背景替换为RGB(124,116,104)；鸟体保持原样。
+background_only：紧贴鸟框内部的鸟体替换为RGB(124,116,104)，保留周围背景。
+
+结果（3个训练种子的均值±样本标准差，不是置信区间）：
+baseline：Top-1 74.00% ± 0.36%；Top-5 93.44% ± 0.42%；Macro-F1 73.91% ± 0.33%
+background_blur：Top-1 73.19% ± 0.51%；Top-5 92.94% ± 0.39%；Macro-F1 73.02% ± 0.57%
+background_occluded：Top-1 72.83% ± 0.46%；Top-5 92.78% ± 0.10%；Macro-F1 72.64% ± 0.55%
+background_only：Top-1 1.61% ± 0.34%；Top-5 6.92% ± 0.74%；Macro-F1 0.70% ± 0.16%
+
+按鸟框面积分组的 Top-1 结果（3个种子平均）：
+<10%（n=33）：baseline 84.85%；blur 84.85%（+0.00pp）；occluded 82.83%（-2.02pp）；bird masked 2.02%（-82.83pp）。
+10-30%（n=539）：baseline 73.96%；blur 73.59%（-0.37pp）；occluded 72.48%（-1.48pp）；bird masked 1.73%（-72.23pp）。
+30-60%（n=501）：baseline 73.25%；blur 71.99%（-1.26pp）；occluded 72.19%（-1.06pp）；bird masked 1.80%（-71.46pp）。
+>=60%（n=127）：baseline 74.28%；blur 73.23%（-1.05pp）；occluded 74.28%（+0.00pp）；bird masked 0.26%（-74.02pp）。
+
+限制：这些是分布变化测试而非重新训练；背景模糊和遮挡只覆盖模型输入视野内的背景。鸟体仍使用真实边界框。background-only 是辅助诊断，不能单独证明模型在正常输入上依赖背景。Top-10混淆类别对来自seed42验证集；每类只有6张验证图片，因此混淆计数很小，需谨慎解释。
+
+文件：summary.json、per_seed_results.csv、validation_predictions.csv、paired_differences.csv、bird_size_analysis.csv、top_prediction_changes.csv、top10_confusion_pairs.csv，以及六张分析图。

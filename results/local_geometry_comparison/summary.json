@@ -1,0 +1,145 @@
+{
+  "full_letterbox": {
+    "accuracy": {
+      "mean": 0.6524999936421713,
+      "std": 0.004409615105794552
+    },
+    "top5": {
+      "mean": 0.8827777777777778,
+      "std": 0.007561476438231229
+    },
+    "macro_f1": {
+      "mean": 0.6481519540150961,
+      "std": 0.005545669668687101
+    }
+  },
+  "crop_letterbox": {
+    "accuracy": {
+      "mean": 0.7400000095367432,
+      "std": 0.0036324123221422528
+    },
+    "top5": {
+      "mean": 0.9344444444444445,
+      "std": 0.0041943524640392915
+    },
+    "macro_f1": {
+      "mean": 0.7390809655189514,
+      "std": 0.0032604257804641997
+    }
+  },
+  "paired": [
+    {
+      "seed": 42,
+      "crop_minus_full_delta_percentage_points": 9.333333333333334,
+      "fixed_errors": 172,
+      "new_errors": 60
+    },
+    {
+      "seed": 43,
+      "crop_minus_full_delta_percentage_points": 8.083333333333334,
+      "fixed_errors": 168,
+      "new_errors": 71
+    },
+    {
+      "seed": 44,
+      "crop_minus_full_delta_percentage_points": 8.833333333333334,
+      "fixed_errors": 179,
+      "new_errors": 73
+    }
+  ],
+  "bird_size_analysis": [
+    {
+      "bird_box_area_group": "<10%",
+      "images": 33,
+      "full_letterbox_mean": 0.40404040404040403,
+      "full_letterbox_std": 0.03499092540543187,
+      "crop_letterbox_mean": 0.8484848484848485,
+      "crop_letterbox_std": 0.030303030303030276
+    },
+    {
+      "bird_box_area_group": "10-30%",
+      "images": 539,
+      "full_letterbox_mean": 0.6221397649969078,
+      "full_letterbox_std": 0.01054961169402103,
+      "crop_letterbox_mean": 0.7396413110698825,
+      "crop_letterbox_std": 0.010870993092917097
+    },
+    {
+      "bird_box_area_group": "30-60%",
+      "images": 501,
+      "full_letterbox_mean": 0.6813040585495674,
+      "full_letterbox_std": 0.005761978734427427,
+      "crop_letterbox_mean": 0.7325349301397206,
+      "crop_letterbox_std": 0.005280940740647857
+    },
+    {
+      "bird_box_area_group": ">=60%",
+      "images": 127,
+      "full_letterbox_mean": 0.7322834645669292,
+      "full_letterbox_std": 0.013638195335187986,
+      "crop_letterbox_mean": 0.7427821522309711,
+      "crop_letterbox_std": 0.016391070861938025
+    }
+  ],
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "split_seed": 42,
+  "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6",
+  "official_test_evaluated": false,
+  "train_images": 4794,
+  "validation_images": 1200,
+  "environments": [
+    {
+      "seed": 42,
+      "mode": "full_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    },
+    {
+      "seed": 43,
+      "mode": "full_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    },
+    {
+      "seed": 44,
+      "mode": "full_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    },
+    {
+      "seed": 42,
+      "mode": "crop_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    },
+    {
+      "seed": 43,
+      "mode": "crop_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    },
+    {
+      "seed": 44,
+      "mode": "crop_letterbox",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "torch": "2.5.1+cu124",
+      "cuda": "12.4",
+      "split_sha256": "40122ce37b1e511dcd2975be60d9b52bc99a4e2601d3ad310f588f6aed996df6"
+    }
+  ],
+  "experiment": "Both conditions use whole-region letterbox geometry and only horizontal-flip augmentation. The crop condition additionally uses the ground-truth box expanded by 10%."
+}

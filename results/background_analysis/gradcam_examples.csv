@@ -1,0 +1,5 @@
+﻿role,image_id,path,true_class,predicted_class,correct
+Smallest bird,7935,136.Barn_Swallow/Barn_Swallow_0056_132916.jpg,136.Barn_Swallow,136.Barn_Swallow,1
+Largest bird,272,005.Crested_Auklet/Crested_Auklet_0071_785255.jpg,005.Crested_Auklet,005.Crested_Auklet,1
+Letterbox improvement,166,003.Sooty_Albatross/Sooty_Albatross_0014_796373.jpg,003.Sooty_Albatross,003.Sooty_Albatross,1
+Letterbox regression,89,002.Laysan_Albatross/Laysan_Albatross_0088_883.jpg,002.Laysan_Albatross,177.Prothonotary_Warbler,0
